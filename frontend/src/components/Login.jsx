@@ -12,7 +12,8 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/register', {
+            // POST request for registration
+            const postResponse = await fetch('http://127.0.0.1:5000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -20,18 +21,26 @@ const Login = () => {
                 body: JSON.stringify({ firstname, secondname, email, password }),
             });
 
-            const data = await response.json();
+            const postData = await postResponse.json();
 
-            if (response.ok) {
+            if (postResponse.ok) {
                 setSuccessMessage('Registration successful!');
                 setErrorMessage('');
-                
+
+                // Reset form fields
                 setFirstname('');
                 setSecondname('');
                 setEmail('');
                 setPassword('');
+
+                // After successful registration, make a GET request
+                const getResponse = await fetch('http://127.0.0.1:5000/register'); // Replace with your actual GET endpoint
+                const getData = await getResponse.json();
+
+                // Handle the fetched data if needed
+                console.log('Fetched data:', getData);
             } else {
-                setErrorMessage(data.message || 'Registration failed. Please try again.');
+                setErrorMessage(postData.message || 'Registration failed. Please try again.');
                 setSuccessMessage('');
             }
         } catch (error) {

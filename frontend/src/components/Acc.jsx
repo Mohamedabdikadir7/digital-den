@@ -36,14 +36,18 @@ const Acc = ({ setCart }) => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">Accessories</h1>
+      {/* <h1 className="text-2xl font-bold mb-4">Accessories</h1> */}
+       <div className="mb-6 text-left">
+  <h2 className="text-3xl font-bold mb-2">Accessories</h2>
+  <hr className="border-t-4 border-gray-300" /> {/* Increased border thickness */}
+</div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {accessories.map(accessory => (
           <div key={accessory.id} className="border rounded-md p-4 shadow-md">
             <img
               src={accessory.img_url}
               alt={accessory.name}
-              className="w-full h-40 object-cover mb-2"
+              className="w-full h-40 object-contain mb-2"
             />
             <h3 className="font-bold">{accessory.name}</h3>
             <p>{accessory.description}</p>

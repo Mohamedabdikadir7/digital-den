@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUserCircle, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-function Navbar({ cart }) {
+function Navbar({ cart, setSearchTerm }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
 
@@ -20,6 +20,7 @@ function Navbar({ cart }) {
             type="search"
             placeholder="Search products..."
             className="w-full rounded-md bg-gray-200 pl-8 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => setSearchTerm(e.target.value)} // Update search term on input change
           />
         </div>
         {/* Icons: Cart and Account */}
@@ -31,7 +32,6 @@ function Navbar({ cart }) {
             aria-label="Shopping Cart"
           >
             <FontAwesomeIcon icon={faShoppingCart} className="w-6 h-6 text-white" />
-            {/* Cart Count */}
             <span className="absolute -top-2 -right-2 bg-red-600 text-xs text-white rounded-full w-5 h-5 flex items-center justify-center">
               {cartCount}
             </span>
@@ -49,8 +49,8 @@ function Navbar({ cart }) {
             </button>
             {accountMenuOpen && (
               <div className="absolute right-0 mt-2 bg-white border border-gray-300 rounded-md shadow-md">
-                <Link to="/signin" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Sign In</Link>
-                <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
+                <Link to="/register" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
+                <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200"> Register</Link>
               </div>
             )}
           </div>
@@ -66,14 +66,14 @@ function Navbar({ cart }) {
       </div>
 
       {/* Mobile Navigation */}
-      <nav className={`md:flex md:items-center ${menuOpen ? "block" : "hidden"} bg-gray-100 md:bg-transparent`}>
+      <nav className={`md:flex md:items-center transition-all duration-300 ease-in-out ${menuOpen ? "block" : "hidden"} bg-gray-100 md:bg-transparent`}>
         <div className="container flex flex-col md:flex-row items-center justify-center py-3 px-4 md:px-6 space-y-2 md:space-y-0 md:space-x-6">
           <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
             <li>
-              <Link to="/laptops" className="hover:text-blue-500 px-2 py-1 rounded-md text-gray-800">Laptops</Link>
+              <Link to="/laptop" className="hover:text-blue-500 px-2 py-1 rounded-md text-gray-800">Laptops</Link>
             </li>
             <li>
-              <Link to="/appliances" className="hover:text-blue-500 px-2 py-1 rounded-md text-gray-800">Accessories</Link>
+              <Link to="/acc" className="hover:text-blue-500 px-2 py-1 rounded-md text-gray-800">Accessories</Link>
             </li>
             <li>
               <Link to="/phones" className="hover:text-blue-500 px-2 py-1 rounded-md text-gray-800">Phones</Link>
@@ -88,7 +88,7 @@ function Navbar({ cart }) {
   );
 }
 
-// Inline SVGs for icons (same as before)
+// Inline SVG for the hamburger menu icon
 function MenuIcon(props) {
   return (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">

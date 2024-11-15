@@ -1,17 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS  # Import CORS
+from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash  # For password hashing
 
 app = Flask(__name__)
-
-# Enable CORS for all routes
 CORS(app)
 
-# Configure SQLite database connection (you can switch to MySQL later if needed)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///computers_shop.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Initialize the database
 db = SQLAlchemy(app)
 
 # Define Models for each table
@@ -30,6 +27,14 @@ class Laptop(db.Model):
     price = db.Column(db.String(255))
     description = db.Column(db.Text)
     img_url = db.Column(db.String(500))
+
+class Phone(db.Model):
+    __tablename__ = 'phones'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    img_url = db.Column(db.String(255), nullable=False)
 
 class Accessory(db.Model):
     __tablename__ = 'accessories'
@@ -55,10 +60,18 @@ class GamingCPU(db.Model):
     description = db.Column(db.Text)
     img_url = db.Column(db.String(500))
 
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    firstname = db.Column(db.String(255))
+    secondname = db.Column(db.String(255))
+    email = db.Column(db.String(255), unique=True)  # Ensure email is unique
+    password_hash = db.Column(db.String(255))  # Store hashed password
+
 # Welcome route
 @app.route('/', methods=['GET'])
 def welcome():
-    return "<h1>Welcome to my Flask App!</h1><p>Visit /monitors, /laptops, /accessories, /macbooks, or /gaming_cpus to get the data.</p>"
+    return "<h1>Welcome to my Flask App!</h1><p>Visit /monitors, /laptops, /accessories, /macbooks, /gaming_cpus or /phones to get the data.</p>"
 
 # Endpoint to fetch all monitors
 @app.route('/monitors', methods=['GET'])
@@ -71,6 +84,18 @@ def get_monitors():
         'description': monitor.description,
         'img_url': monitor.img_url
     } for monitor in monitors])
+
+# Endpoint to fetch all phones
+@app.route('/phones', methods=['GET'])
+def get_phones():
+    phones = Phone.query.all()
+    return jsonify([{
+        'id': phone.id,
+        'name': phone.name,
+        'price': phone.price,
+        'description': phone.description,
+        'img_url': phone.img_url
+    } for phone in phones])
 
 # Endpoint to fetch all laptops
 @app.route('/laptops', methods=['GET'])
@@ -118,13 +143,37 @@ def get_gaming_cpus():
         'price': cpu.price,
         'description': cpu.description,
         'img_url': cpu.img_url
-    } for cpu in gaming_cpus])
+     } for cpu in gaming_cpus])
 
+# User registration endpoint
+@app.route('/register', methods=['POST'])
+def register_user():
+    data = request.get_json()
+    
+    firstname = data.get('firstname')
+    secondname = data.get('secondname')
+    email = data.get('email')
+    
+     # Hash the password before storing it
+    password_hash=generate_password_hash(data.get('password'))
+
+     # Check if the email already exists
+    if User.query.filter_by(email=email).first():
+         return jsonify({'message': 'Email already exists!'}), 400
+
+    new_user=User(firstname=firstname, secondname=secondname,email=email,password_hash=password_hash)
+    try:
+         # Add user to the database
+         db.session.add(new_user)
+         db.session.commit()
+         return jsonify({'message':'User registered successfully!'}), 201
+    except Exception as e:
+         return jsonify({'message':'Error registering user: {}'.format(str(e))}), 500
 
 # Ensure that tables are created in the database
 with app.app_context():
-    db.create_all()
+     db.create_all()
 
 # Run the application
 if __name__ == '__main__':
-    app.run(debug=True)
+     app.run(debug=True)

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Hero() {
+export default function Abdi() {  // Rename the component to Abdi (or Hero if you prefer)
   return (
     <section className="w-full min-h-screen py-12 md:py-24 lg:py-32 relative bg-gradient-to-r from-gray-100 to-white">
       <div className="container relative flex flex-col lg:flex-row items-center justify-between h-full px-4 md:px-6 z-10">
@@ -36,7 +36,7 @@ export default function Hero() {
         {/* Right Side: Image */}
         <div className="lg:w-1/2 h-96 lg:h-full flex-shrink-0 flex items-center justify-center">
           <img
-            src="https://i.pinimg.com/236x/e9/9c/4b/e99c4b6f4899f2efdca0449d2c8781c6.jpg"  // Updated with your image URL
+            src="https://i.pinimg.com/236x/e9/9c/4b/e99c4b6f4899f2efdca0449d2c8781c6.jpg"
             alt="MacBook Pro"
             className="w-full h-auto object-cover lg:max-w-lg"
           />
