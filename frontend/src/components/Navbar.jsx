@@ -79,6 +79,12 @@ function Navbar({ cart, setSearchTerm }) {
               <Link to="/phones" className="hover:text-blue-500 px-2 py-1 rounded-md text-gray-800">Phones</Link>
             </li>
             <li>
+              <Link to="/gaming-pcs" className="hover:text-blue-500 px-2 py-1 rounded-md text-gray-800">Gaming PCs</Link>
+            </li>
+            <li>
+              <Link to="/macbooks" className="hover:text-blue-500 px-2 py-1 rounded-md text-gray-800">MacBooks</Link>
+            </li>
+            <li>
               <Link to="/contact" className="hover:text-blue-500 px-2 py-1 rounded-md text-gray-800">Contact Us</Link>
             </li>
           </ul>

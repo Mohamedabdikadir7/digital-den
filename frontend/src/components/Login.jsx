@@ -5,6 +5,7 @@ const Login = () => {
     const [secondname, setSecondname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('buyer'); // Default role
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -18,7 +19,7 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ firstname, secondname, email, password }),
+                body: JSON.stringify({ firstname, secondname, email, password, role }),
             });
 
             const postData = await postResponse.json();
@@ -32,6 +33,7 @@ const Login = () => {
                 setSecondname('');
                 setEmail('');
                 setPassword('');
+                setRole('buyer');
 
                 // After successful registration, make a GET request
                 const getResponse = await fetch('http://127.0.0.1:5000/register'); // Replace with your actual GET endpoint
@@ -86,6 +88,19 @@ const Login = () => {
                         required
                         className="border border-gray-300 p-2 mb-4 w-full rounded"
                     />
+                    {/* Role Selection */}
+                    <div className="mb-4">
+                        <label className="block mb-2 font-bold">Register As</label>
+                        <select
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                            required
+                            className="border border-gray-300 p-2 w-full rounded"
+                        >
+                            <option value="buyer">Buyer</option>
+                            <option value="seller">Seller</option>
+                        </select>
+                    </div>
                     <button type="submit" className="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-600 transition">
                         Register
                     </button>

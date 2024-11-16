@@ -34,7 +34,8 @@ class Phone(db.Model):
     name = db.Column(db.String(255), nullable=False)
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    img_url = db.Column(db.String(255), nullable=False)
+    image_url = db.Column(db.String(255), nullable=False)  # Update this line
+
 
 class Accessory(db.Model):
     __tablename__ = 'accessories'
@@ -94,7 +95,7 @@ def get_phones():
         'name': phone.name,
         'price': phone.price,
         'description': phone.description,
-        'img_url': phone.img_url
+        'img_url': phone.image_url
     } for phone in phones])
 
 # Endpoint to fetch all laptops

@@ -5,9 +5,11 @@ import Cart from './components/Cart';
 import Abdi from './components/Abdi'; // Hero Section Component
 import Laptop from './components/Laptop';
 import Acc from './components/Acc';
-import Phones from './components/Phones'
-import Login from './components/Login'; // Import Login Component
-import FeaturedAndOffers from './components/FeaturedAndOffers'; // New Component for Featured and Offer sections
+import Phones from './components/Phones';
+import GamingPCs from './components/GamingPCs'; // Gaming PCs Component
+import MacBooks from './components/MacBooks'; // MacBooks Component
+import Login from './components/Login'; // Login Component
+import FeaturedAndOffers from './components/FeaturedAndOffers'; // Featured and Offer sections
 import { useState, useEffect } from 'react';
 
 import './App.css';
@@ -39,11 +41,13 @@ function App() {
               </>
             }
           />
-          <Route path="/login" element={<Login />} /> {/* Login Component on its own route */}
+          <Route path="/login" element={<Login />} /> {/* Login Component */}
           <Route path="/laptop" element={<Laptop setCart={setCart} />} />
           <Route path="/phones" element={<Phones setCart={setCart} />} />
           <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
           <Route path="/acc" element={<Acc setCart={setCart} />} />
+          <Route path="/gaming-pcs" element={<GamingPCs setCart={setCart} />} />
+          <Route path="/macbooks" element={<MacBooks setCart={setCart} />} />
         </Routes>
       </div>
     </Router>
