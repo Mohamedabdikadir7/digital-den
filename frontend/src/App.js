@@ -9,6 +9,7 @@ import Phones from './components/Phones';
 import GamingPCs from './components/GamingPCs'; // Gaming PCs Component
 import MacBooks from './components/MacBooks'; // MacBooks Component
 import Login from './components/Login'; // Login Component
+import Log from './components/Log'; // Login Component
 import FeaturedAndOffers from './components/FeaturedAndOffers'; // Featured and Offer sections
 import { useState, useEffect } from 'react';
 
@@ -42,6 +43,7 @@ function App() {
             }
           />
           <Route path="/login" element={<Login />} /> {/* Login Component */}
+          <Route path="/log" element={<Log />} /> {/* Login Component */}
           <Route path="/laptop" element={<Laptop setCart={setCart} />} />
           <Route path="/phones" element={<Phones setCart={setCart} />} />
           <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />

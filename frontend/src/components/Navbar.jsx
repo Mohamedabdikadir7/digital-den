@@ -49,7 +49,7 @@ function Navbar({ cart, setSearchTerm }) {
             </button>
             {accountMenuOpen && (
               <div className="absolute right-0 mt-2 bg-white border border-gray-300 rounded-md shadow-md">
-                <Link to="/register" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
+                <Link to="/log" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
                 <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200"> Register</Link>
               </div>
             )}
